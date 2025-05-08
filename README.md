@@ -4,12 +4,12 @@ This project demonstrates a **robust, context-aware retriever pipeline** using L
 
 ---
 ## Architecture of a Naive RAG Pipeline
-![Retrieval Augmented Generation](https://github.com/AILucifer99/Ensemble-Merger-Retriever-RAG-Langchain/blob/main/architecture/naive-rag.jpg?raw=true)
+![Retrieval Augmented Generation](https://github.com/AILucifer99/Ensemble-Merger-Retriever-RAG-Langchain/blob/main/architecture/naive-rag.png)
 
 ---
 
 ## Architecture of the designed pipeline
-![Ensemble-ContextualCompression-Retrieval Augmented Generation](https://github.com/AILucifer99/Ensemble-Merger-Retriever-RAG-Langchain/blob/main/architecture/ensemble-rag.jpg?raw=true)
+![Ensemble-ContextualCompression-Retrieval Augmented Generation](https://github.com/AILucifer99/Ensemble-Merger-Retriever-RAG-Langchain/blob/main/architecture/ensemble-rag.png)
 
 ## 🔍 What This Project Covers
 
