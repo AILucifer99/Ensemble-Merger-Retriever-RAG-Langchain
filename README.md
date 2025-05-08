@@ -115,7 +115,6 @@ from langchain.retrievers.document_compressors import LLMChainExtractor
 from langchain_chroma import Chroma
 from langchain.retrievers.document_compressors import DocumentCompressorPipeline
 from langchain_community.document_transformers import EmbeddingsRedundantFilter
-from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.retrievers.document_compressors import EmbeddingsFilter
 from langchain.chains import (
     RetrievalQAWithSourcesChain, 
@@ -223,8 +222,8 @@ faissRetriever, chromaRetriever, embeddings = DataAugmentationWithDualRetriever(
     chunk_overlap = 128,
     faiss_retriever_search_type = "similarity",
     faiss_retriever_k_documents = 3,
-    chroma_retriever_search_type = "similarity",
-    chroma_retriever_k_documents = 4,
+    chroma_retriever_search_type = "mmr",
+    chroma_retriever_k_documents = 5,
     execute_function = True
 )
 ```
