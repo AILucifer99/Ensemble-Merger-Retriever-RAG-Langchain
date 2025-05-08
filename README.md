@@ -49,6 +49,7 @@ GROQ_API_KEY=your_groq_api_key
 OPENAI_API_KEY=your_openai_api_key
 ```
 
+### 3. Running the code
 ```bash
 python inference.py
 ```
