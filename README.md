@@ -3,6 +3,13 @@
 This project demonstrates a **robust, context-aware retriever pipeline** using LangChain's `ContextualCompressionRetriever`. It enhances standard retrieval by compressing context — filtering or summarizing — before passing it to an LLM. This is useful for token-limited models and improves precision in Retrieval-Augmented Generation (RAG). The project demonstrates how to use ensemble retrievers via two separate vectorstores `ChromaDB` and `FAISS`. Langchain's `MergerRetriever` plays the most important role in creating the ensemble system to ensure better output when provided a user question.
 
 ---
+## Architecture of a Naive RAG Pipeline
+![Retrieval Augmented Generation](https://github.com/AILucifer99/Ensemble-Merger-Retriever-RAG-Langchain/blob/main/architecture/naive-rag.jpg?raw=true)
+
+---
+
+## Architecture of the designed pipeline
+![Ensemble-ContextualCompression-Retrieval Augmented Generation](https://github.com/AILucifer99/Ensemble-Merger-Retriever-RAG-Langchain/blob/main/architecture/ensemble-rag.jpg?raw=true)
 
 ## 🔍 What This Project Covers
 
