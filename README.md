@@ -94,7 +94,44 @@ GROQ_API_KEY=your_groq_api_key
    - A `RetrievalQA` chain is constructed using Groq-hosted LLM to answer user queries.
 
 ---
+---
 
+## 🧪 Most Important Modules for the working.
+
+```python
+from langchain_community.document_loaders import PyPDFLoader, PyMuPDFLoader
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_openai import OpenAIEmbeddings
+from langchain_groq import ChatGroq
+from langchain_community.vectorstores import FAISS
+
+from langchain_text_splitters import (
+    TokenTextSplitter, 
+    RecursiveCharacterTextSplitter
+)
+from langchain.retrievers import ContextualCompressionRetriever
+from langchain.retrievers.document_compressors import LLMChainExtractor
+from langchain_chroma import Chroma
+from langchain.retrievers.document_compressors import DocumentCompressorPipeline
+from langchain_community.document_transformers import EmbeddingsRedundantFilter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain.retrievers.document_compressors import EmbeddingsFilter
+from langchain.chains import (
+    RetrievalQAWithSourcesChain, 
+    RetrievalQA
+)
+from langchain.retrievers.document_compressors import LLMChainFilter
+from langchain_community.document_transformers import LongContextReorder
+from langchain.retrievers.merger_retriever import MergerRetriever
+
+from dotenv import load_dotenv, find_dotenv
+import os
+from langchain.chains import RetrievalQA
+import langchain
+langchain.debug = False
+```
+
+---
 ## 🧪 Sample Query Code
 
 ```python
