@@ -1,49 +1,47 @@
-# 🧠 Contextual Compression Retriever with LangChain
+# 🧠 Dual Ensemble-ContextualCompression-Retrieval Augmented Generation
 
-This project demonstrates how to build a **context-aware retriever** pipeline using LangChain's `ContextualCompressionRetriever`. It compresses retrieved content before feeding it into an LLM, improving the quality and efficiency of Retrieval-Augmented Generation (RAG) systems.
-
----
-
-## 🔍 What It Does
-
-This notebook showcases:
-
-- PDF ingestion using LangChain's document loaders
-- Chunking and embedding using Google Generative AI
-- Vector storage and similarity search via FAISS
-- An advanced **Contextual Compression Retriever** that filters or summarizes content
-- RetrievalQA pipeline using Groq-hosted LLMs (like Gemma)
+This project demonstrates a **robust, context-aware retriever pipeline** using LangChain's `ContextualCompressionRetriever`. It enhances standard retrieval by compressing context — filtering or summarizing — before passing it to an LLM. This is useful for token-limited models and improves precision in Retrieval-Augmented Generation (RAG).
 
 ---
 
-## 📦 Components Used
+## 🔍 What This Project Covers
 
-| Component                      | Description |
-|-------------------------------|-------------|
-| `PyPDFLoader`                 | Loads PDF documents |
-| `RecursiveCharacterTextSplitter` | Chunks documents with overlap |
-| `GoogleGenerativeAIEmbeddings` | Embeds chunks using Gemini Embeddings |
-| `FAISS and ChromaDB`                       | Stores embeddings for similarity search |
-| `ContextualCompressionRetriever` | Wraps base retriever and filters docs |
-| `LLMChainExtractor` or `EmbeddingsFilter` | Compresses irrelevant content |
-| `ChatGroq`                    | LLMs like Gemma or LLaMA via Groq |
-| `RetrievalQA`                 | RAG pipeline from retriever + LLM |
+- Loading and parsing PDFs
+- Text chunking with overlaps
+- Generating semantic embeddings (Google / OpenAI)
+- Vector indexing and similarity search with FAISS
+- Building an advanced **Contextual Compression Retriever**:
+  - LLM-based compression (summarization/filtering)
+  - Embedding similarity filtering
+- Querying with a Groq-hosted LLM (Gemma 2B)
+- Constructing a Retrieval-Augmented Generation (RAG) pipeline
 
 ---
 
-## 🛠️ Setup Instructions
+## 📂 File Overview
+
+| File | Description |
+|------|-------------|
+| `ContextualCompressionRetriever.ipynb` | Main notebook showcasing the pipeline |
+| `ReAct.pdf` | Sample input document (academic paper) |
+| `README.md` | This documentation file |
+| `.env` | Environment variable file with API keys |
+
+---
+
+## ⚙️ Setup Instructions
 
 ### 1. Install Dependencies
 
-Install required packages:
+Install required Python packages:
 
 ```bash
-pip install langchain langchain-openai langchain-google-genai langchain-community langchain-groq python-dotenv
+pip install langchain langchain-openai langchain-google-genai langchain-community langchain-groq python-dotenv faiss-cpu
 ```
 
-### 2. Environment Variables
+### 2. Environment Setup
 
-Create a `.env` file in the root directory and add:
+Create a `.env` file with the following content:
 
 ```env
 GOOGLE_API_KEY=your_google_api_key
@@ -52,24 +50,52 @@ GROQ_API_KEY=your_groq_api_key
 
 ---
 
-## 🚀 How It Works
+## 🧠 Key Components
 
-### Step-by-step Pipeline
-
-1. **Load PDF:** A document (e.g., `ReAct.pdf`) is loaded and parsed.
-2. **Chunking:** Text is split into overlapping chunks.
-3. **Embedding:** Chunks are embedded using Gemini (`embedding-001`).
-4. **Store Vectors:** FAISS vector store is created for similarity search.
-5. **Query Input:** User inputs a query (e.g., "Explain the ReAct Algorithm").
-6. **Retrieve Chunks:** FAISS retrieves top `k` relevant chunks.
-7. **Compress Context:** 
-    - Uses either LLM or embedding-based filtering
-    - Removes irrelevant or redundant parts
-8. **Generate Answer:** Filtered context is sent to an LLM (via Groq) to generate the final answer.
+| Component | Description |
+|----------|-------------|
+| `PyPDFLoader` | Extracts text from PDF files |
+| `RecursiveCharacterTextSplitter` | Splits documents into overlapping chunks |
+| `GoogleGenerativeAIEmbeddings` | Converts text into vector embeddings |
+| `FAISS` | Fast similarity search over document vectors |
+| `ContextualCompressionRetriever` | Wraps a base retriever and compresses results |
+| `LLMChainExtractor` | Uses an LLM to extract most relevant parts |
+| `EmbeddingsFilter` | Filters based on cosine similarity to query |
+| `ChatGroq` | Access to fast LLMs via Groq (e.g., Gemma, LLaMA3) |
+| `RetrievalQA` | LLM + retriever chain for question answering |
 
 ---
 
-## 🧪 Sample Query
+## 🚀 How It Works
+
+### ✅ Step-by-Step Flow
+
+1. **PDF Loading**
+   - Input document is parsed using `PyPDFLoader`.
+
+2. **Chunking**
+   - Text is split using `RecursiveCharacterTextSplitter` with chunk size 512 and 128 overlap.
+
+3. **Embedding**
+   - Embeddings are generated using Google’s `embedding-001` model.
+
+4. **Vector Store (FAISS)**
+   - FAISS is used to index and retrieve top-k relevant chunks.
+
+5. **Compression Layer (Optional but Powerful)**
+   - Either:
+     - `LLMChainExtractor`: uses LLM to extract only relevant info
+     - `EmbeddingsFilter`: filters based on similarity scores
+
+6. **Retriever**
+   - A `ContextualCompressionRetriever` wraps the base retriever and compresses retrieved results.
+
+7. **Question Answering**
+   - A `RetrievalQA` chain is constructed using Groq-hosted LLM to answer user queries.
+
+---
+
+## 🧪 Sample Query Code
 
 ```python
 user_question = "Explain the concept of ReAct Algorithm"
@@ -79,14 +105,34 @@ print(result["result"])
 
 ---
 
-## 📌 Notes
+## 🛠️ Customization Tips
 
-- You can switch between Google or OpenAI embeddings by toggling `embedding_provider`.
-- Replace `retriever` in `RetrievalQA` with the `ContextualCompressionRetriever` to enable advanced filtering.
-- Useful for token-efficient and precision-focused RAG setups.
+- To switch to **OpenAI Embeddings**, update:
+  ```python
+  embedding = OpenAIEmbeddings()
+  ```
+- Replace compression logic:
+  ```python
+  compressor = EmbeddingsFilter(...) or LLMChainExtractor(...)
+  ```
+
+- For LLMs via Groq, use any of:
+  - `llama3-70b-8192`
+  - `gemma2-9b-it`
+  - `qwen-qwq-32b`
+
+---
+
+## 📌 Use Cases
+
+- Token-efficient RAG for large document corpora
+- Domain-specific QA systems
+- Legal, academic, or technical document assistants
+- Precise summarization & answer generation
 
 ---
 
 ## 🧠 Author
 
-Built with ❤️ by a GenAI Architect leveraging LangChain, Groq, and Gemini for advanced document QA pipelines.
+Built with ❤️ by a GenAI Architect using LangChain, Gemini, Groq, and FAISS for high-performance document intelligence systems.
+
