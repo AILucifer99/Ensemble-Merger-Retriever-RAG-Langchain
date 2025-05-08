@@ -1,0 +1,13 @@
+langchain
+langchain_core
+langchain_community
+langchain_groq
+langchain_google_genai
+langchain_openai
+langchain_chroma
+chromadb
+faiss-cpu
+tiktoken
+PyPDF2
+python-dotenv
+
