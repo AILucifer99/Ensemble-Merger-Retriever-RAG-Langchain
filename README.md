@@ -36,7 +36,7 @@ This project demonstrates a **robust, context-aware retriever pipeline** using L
 Install required Python packages:
 
 ```bash
-pip install langchain langchain-openai langchain-google-genai langchain-community langchain-groq python-dotenv faiss-cpu
+pip install -r requirements.txt
 ```
 
 ### 2. Environment Setup
