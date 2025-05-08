@@ -1,6 +1,6 @@
 User Question: How the authors have designed ReAct, explain with as much details as possible.
 
-* **Response | Google Gemma2-9B-It Model via Groq Cloud -**
+**Response | Google Gemma2-9B-It Model via Groq Cloud -**
 Final Answer:
 The authors of ReAct designed it as a general framework for combining reasoning and acting with language models.
 
@@ -33,8 +33,7 @@ Here's a breakdown of the key design aspects:
 
 Let me know if you have any other questions.
 
-
-* **Response | OpenAI GPT-4 Model via OpenAI API Platform -**
+**Response | OpenAI GPT-4 Model via OpenAI API Platform -**
 Final Answer:
 ReAct is designed to combine reasoning and acting using language models.
 
