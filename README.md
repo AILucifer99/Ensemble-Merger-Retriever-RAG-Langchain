@@ -49,6 +49,10 @@ GROQ_API_KEY=your_groq_api_key
 OPENAI_API_KEY=your_openai_api_key
 ```
 
+```bash
+python inference.py
+```
+
 ---
 
 ## 🧠 Key Components
