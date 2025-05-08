@@ -169,7 +169,205 @@ print(result["result"])
 
 ---
 
+## Dual Retriever RAG System: Code Explanation
+This document explains a sophisticated Retrieval-Augmented Generation (RAG) system that implements a dual retriever approach with contextual compression. The system enhances document retrieval quality by combining two vector databases (FAISS and Chroma) with advanced filtering techniques.
+
+## Code Structure
+
+The code consists of three main functions:
+1. `DataAugmentationWithDualRetriever`: Processes documents and creates dual retrievers
+2. `EnsembleContextualCompressionRetriever`: Implements compression and filtering
+3. `generateAnswerFunction`: Handles question answering with different RAG pipelines
+
+Let's examine each function in detail.
+
+## DataAugmentationWithDualRetriever
+
+This function handles document loading, chunking, and creating vector stores.
+
+```python
+def DataAugmentationWithDualRetriever(
+    data_path, embedding_provider, chunk_size, chunk_overlap, 
+    faiss_retriever_search_type, faiss_retriever_k_documents, 
+    chroma_retriever_search_type, chroma_retriever_k_documents, **kwargs):
+    # Function implementation...
+```
+
+### Parameters:
+- `data_path`: Path to the PDF document to process
+- `embedding_provider`: Embedding model provider ("Google" or "OpenAI")
+- `chunk_size`: Size of document chunks in characters
+- `chunk_overlap`: Overlap between chunks in characters
+- `faiss_retriever_search_type`: Search method for FAISS (typically "similarity")
+- `faiss_retriever_k_documents`: Number of documents to retrieve with FAISS
+- `chroma_retriever_search_type`: Search method for Chroma
+- `chroma_retriever_k_documents`: Number of documents to retrieve with Chroma
+- `**kwargs`: Additional parameters, including `execute_function`
+
+### Process:
+1. Loads PDF documents using `PyMuPDFLoader`
+2. Splits documents into chunks using `RecursiveCharacterTextSplitter`
+3. Creates embeddings using either Google AI or OpenAI models
+4. Builds two vector stores:
+   - FAISS vector database
+   - Chroma vector database
+5. Returns both retrievers and the embedding model
+
+### Example Usage:
+```python
+faissRetriever, chromaRetriever, embeddings = DataAugmentationWithDualRetriever(
+    data_path = "Data\\ReAct.pdf",
+    embedding_provider = "Google",
+    chunk_size = 512,
+    chunk_overlap = 128,
+    faiss_retriever_search_type = "similarity",
+    faiss_retriever_k_documents = 3,
+    chroma_retriever_search_type = "similarity",
+    chroma_retriever_k_documents = 4,
+    execute_function = True
+)
+```
+
+## EnsembleContextualCompressionRetriever
+
+This function creates an advanced retrieval pipeline with document filtering and compression.
+
+```python
+def EnsembleContextualCompressionRetriever(**kwargs):
+    # Function implementation...
+```
+
+### Parameters (via kwargs):
+- `embeddings`: Embedding model for similarity calculations
+- `faiss_embeddingfilter_threshold`: Similarity threshold for FAISS filtering
+- `chroma_embeddingfilter_threshold`: Similarity threshold for Chroma filtering
+- `faissRetriever`: FAISS retriever object from previous function
+- `chromaRetriever`: Chroma retriever object from previous function
+- `execute_pipeline`: Boolean to control execution
+
+### Process:
+1. Creates three document transformers:
+   - `EmbeddingsRedundantFilter`: Removes duplicate or highly similar documents
+   - `EmbeddingsFilter`: Filters documents based on relevance thresholds
+   - `LongContextReorder`: Optimizes document ordering for LLM processing
+2. Builds document compression pipelines for each retriever
+3. Creates contextual compression retrievers for both FAISS and Chroma
+4. Merges both retrievers using `MergerRetriever`
+5. Returns the combined retriever
+
+### Example Usage:
+```python
+retriever = EnsembleContextualCompressionRetriever(
+    faiss_embeddingfilter_threshold = 0.75,
+    chroma_embeddingfilter_threshold = 0.6,
+    embeddings = embeddings, 
+    execute_pipeline = True,
+    faissRetriever = faissRetriever, 
+    chromaRetriever = chromaRetriever,
+)
+```
+
+## generateAnswerFunction
+
+This function handles question answering using the retrieval system.
+
+```python
+def generateAnswerFunction(
+    question, llm_model, retriever_function, 
+    verbose=-1, **kwargs):
+    # Function implementation...
+```
+
+### Parameters:
+- `question`: User query text
+- `llm_model`: Language model to use for answer generation
+- `retriever_function`: The combined retriever object
+- `verbose`: Controls output verbosity
+- `**kwargs`: Additional parameters including pipeline configuration
+
+### Process:
+1. Selects RAG pipeline type based on `ragPipelineConfig`:
+   - `RetrievalQAWithSourcesChain`: Includes source attribution
+   - `RetrievalQAChain`: Standard QA chain
+2. Initializes the chosen RAG pipeline
+3. Processes the user question
+4. Returns the generated answer
+
+### Pipeline Options:
+- `chain_type`: Processing method (e.g., "stuff", "map_reduce")
+- `return_source_documents`: Whether to include source documents in response
+
+## Implementation Example
+
+The code includes a simple implementation example:
+
+```python
+dataPath = "Data\\ReAct.pdf"
+embedding = "Google"
+
+faissRetriever, chromaRetriever, embeddings = DataAugmentationWithDualRetriever(
+    # Parameters...
+)
+
+retriever = EnsembleContextualCompressionRetriever(
+    # Parameters...
+)
+```
+
+## Technical Highlights
+
+1. **Dual Retriever Approach**:
+   - Uses two different vector stores (FAISS and Chroma)
+   - Allows different parameters for each retriever
+   - Combines results for more comprehensive retrieval
+
+2. **Contextual Compression**:
+   - Reduces redundancy in retrieved documents
+   - Filters documents based on relevance thresholds
+   - Optimizes document ordering for LLM context windows
+
+3. **Flexible Pipeline Options**:
+   - Supports different RAG pipelines
+   - Allows for source attribution
+   - Configurable chain types
+
+4. **Embedding Model Flexibility**:
+   - Supports Google AI embeddings
+   - Supports OpenAI embeddings
+
+## Advanced Features
+
+### Document Filtering
+The system implements three levels of document filtering:
+- **Redundancy filtering**: Removes duplicate or near-duplicate content
+- **Relevancy filtering**: Only keeps documents above a similarity threshold
+- **Reordering**: Optimizes document order for LLM processing
+
+### Merger Retriever
+The `MergerRetriever` combines results from both retrievers, providing a more robust set of documents for the language model.
+
+### Configurable Thresholds
+Different similarity thresholds can be set for FAISS and Chroma retrievers, allowing fine-tuning of the retrieval process.
+
+## Dependencies
+
+This code relies on several libraries:
+- LangChain for the RAG components
+- PyMuPDF for PDF processing
+- FAISS and Chroma for vector stores
+- Google AI or OpenAI for embeddings
+
+## Conclusion
+
+This implementation represents an advanced RAG system that goes beyond basic retrieval by:
+1. Utilizing multiple vector stores
+2. Implementing sophisticated document filtering
+3. Supporting different question-answering pipelines
+4. Providing flexible configuration options
+
+The dual retriever approach with contextual compression helps overcome limitations of single-retriever systems and improves the quality of context provided to language models.
+
 ## 🧠 Author
 
-Built with ❤️ by a GenAI Architect using LangChain, Gemini, Groq, and FAISS for high-performance document intelligence systems.
+Built with ❤️ by AILucifer using LangChain, Gemini, Groq, and FAISS for high-performance document intelligence systems.
 
