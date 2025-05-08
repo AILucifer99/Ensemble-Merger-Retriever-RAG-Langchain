@@ -30,8 +30,9 @@ Here's a breakdown of the key design aspects:
 * It leverages the strengths of LLMs for both reasoning and generation.
 * The framework is intended to be adaptable, interpretable, and controllable by humans.
 
-
 Let me know if you have any other questions.
+
+=============================================================================================================================
 
 **Response | OpenAI GPT-4 Model via OpenAI API Platform -**
 Final Answer:
