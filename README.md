@@ -59,11 +59,49 @@ OPENAI_API_KEY=your_openai_api_key
 ```
 
 ### 3. Running the code
+
+Either it can be executed in code as modular approach - 
+---
+
 ```bash
-python inference.py
+python modularInference.py
+```
+---
+
+Using command line with argument parsing for more flexibilty and customizations
+---
+
+Basic Usage - 
+```bash
+python rag_pipeline.py --query "How does ReAct use Chain of Thought prompting?"
 ```
 
 ---
+Intermediate Example (custom document and model) - 
+```bash
+python rag_pipeline.py \
+  --query "What are the key design principles in ReAct?" \
+  --data_path "./papers/ReAct.pdf" \
+  --model_name "llama3-70b-8192" \
+  --chunk_size 512 \
+  --chunk_overlap 128 \
+  --embedding_provider "Google"
+```
+---
+
+Full Customization (advanced pipeline config) - 
+```bash
+python rag_pipeline.py \
+  --query "How do the authors combine reasoning and acting in ReAct?" \
+  --data_path "./data/ReAct.pdf" \
+  --model_name "gemma2-9b-it" \
+  --chunk_size 512 \
+  --chunk_overlap 128 \
+  --embedding_provider "Google" \
+  --faiss_search_type "similarity" \
+```
+---
+
 
 ## 🧠 Key Components
 
