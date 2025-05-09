@@ -8,6 +8,7 @@ document question answering with a RAG (Retrieval-Augmented Generation) pipeline
 It shows both automated and interactive question answering modes.
 
 Requirements:
+- asyncRetriever.py (containing the AsyncEnsembleMergerRetriever class)
 - Valid API keys in .env file (GOOGLE_API_KEY, GROQ_API_KEY)
 - PDF document for analysis
 """
@@ -80,28 +81,28 @@ async def main():
     
     # OPTION 1: Use the factory method for quick setup (RECOMMENDED)
     # This is the most convenient way to initialize the retriever in one line
-    retriever = await asyncRetriever.AsyncEnsembleMergerRetriever.create(
-        data_path=pdf_path,                       # Path to your PDF document
-        embedding_provider="Google",              # Embedding provider: "Google" or "OpenAI"
-        model_name="gemma2-9b-it",                # LLM model for answer generation
-        chunk_size=512,                           # Document chunk size in characters
-        chunk_overlap=128                         # Overlap between chunks to maintain context
-    )
+    # retriever = await asyncRetriever.AsyncEnsembleMergerRetriever.create(
+    #     data_path=pdf_path,                       # Path to your PDF document
+    #     embedding_provider="Google",              # Embedding provider: "Google" or "OpenAI"
+    #     model_name="gemma2-9b-it",                # LLM model for answer generation
+    #     chunk_size=512,                           # Document chunk size in characters
+    #     chunk_overlap=128                         # Overlap between chunks to maintain context
+    # )
     
     # OPTION 2: Step-by-step setup (COMMENTED OUT)
     # Uncomment these lines if you need more control over the initialization process
     # This approach allows more fine-grained configuration at each step
     # 
-    # retriever = AsyncEnsembleMergerRetriever()
-    # await retriever.setup_llm(model_name="gemma2-9b-it")
-    # await retriever.setup_embeddings(embedding_provider="Google")
-    # await retriever.load_and_split_documents(
-    #     data_path=pdf_path,
-    #     chunk_size=512,
-    #     chunk_overlap=128
-    # )
-    # await retriever.create_retrievers()
-    # await retriever.build_merger_retriever()
+    retriever = asyncRetriever.AsyncEnsembleMergerRetriever()
+    await retriever.setup_llm(model_name="gemma2-9b-it")
+    await retriever.setup_embeddings(embedding_provider="Google")
+    await retriever.load_and_split_documents(
+        data_path=pdf_path,
+        chunk_size=512,
+        chunk_overlap=128
+    )
+    await retriever.create_retrievers()
+    await retriever.build_merger_retriever()
     
     print("Retriever initialized successfully!")
     
