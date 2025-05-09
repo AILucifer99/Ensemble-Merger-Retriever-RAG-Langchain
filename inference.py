@@ -74,50 +74,83 @@ if __name__ == "__main__":
     )
 
     # LLM Configuration
-    parser.add_argument("--model_name", type=str, default="gemma2-9b-it",
-                        help="Name of the language model to use (e.g., 'gemma2-9b-it', 'llama3-70b-8192')")
+    parser.add_argument(
+        "--model_name", 
+        type=str, 
+        default="gemma2-9b-it",
+        help="Name of the language model to use (e.g., 'gemma2-9b-it', 'llama3-70b-8192')"
+    )
 
     # Document Input Settings
-    parser.add_argument("--data_path", type=str, default="Data{}ReAct.pdf".format(os.sep),
-                        help="Path to the PDF or text document for analysis")
-    parser.add_argument("--chunk_size", type=int, default=512,
-                        help="Character length of each document chunk")
-    parser.add_argument("--chunk_overlap", type=int, default=128,
-                        help="Overlap between chunks to maintain context")
+    parser.add_argument(
+        "--data_path", type=str, default="Data{}ReAct.pdf".format(os.sep),
+        help="Path to the PDF or text document for analysis"
+    )
+    parser.add_argument(
+        "--chunk_size", type=int, default=512,
+        help="Character length of each document chunk"
+    )
+    parser.add_argument(
+        "--chunk_overlap", type=int, default=128,
+        help="Overlap between chunks to maintain context"
+    )
 
     # Embedding Settings
-    parser.add_argument("--embedding_provider", type=str, default="Google", choices=["Google", "OpenAI"],
-                        help="Embedding provider for vectorization")
+    parser.add_argument(
+        "--embedding_provider", type=str, default="Google", 
+        choices=["Google", "OpenAI"],
+        help="Embedding provider for vectorization"
+    )
 
     # FAISS Retriever Settings
-    parser.add_argument("--faiss_search_type", type=str, default="similarity",
-                        help="Search type for FAISS retriever ('similarity' or 'mmr')")
-    parser.add_argument("--faiss_k", type=int, default=3,
-                        help="Number of top documents to retrieve with FAISS")
+    parser.add_argument(
+        "--faiss_search_type", type=str, default="similarity",
+        help="Search type for FAISS retriever ('similarity' or 'mmr')"
+    )
+    parser.add_argument(
+        "--faiss_k", type=int, default=3,
+        help="Number of top documents to retrieve with FAISS"
+    )
 
     # Chroma Retriever Settings
-    parser.add_argument("--chroma_search_type", type=str, default="similarity",
-                        help="Search type for Chroma retriever ('similarity' or 'mmr')")
-    parser.add_argument("--chroma_k", type=int, default=4,
-                        help="Number of top documents to retrieve with Chroma")
+    parser.add_argument(
+        "--chroma_search_type", type=str, default="similarity",
+        help="Search type for Chroma retriever ('similarity' or 'mmr')"
+    )
+    parser.add_argument(
+        "--chroma_k", type=int, default=4,
+        help="Number of top documents to retrieve with Chroma"
+    )
 
     # Filtering thresholds for each retriever
-    parser.add_argument("--faiss_filter_threshold", type=float, default=0.75,
-                        help="Relevance filtering threshold for FAISS (0 to 1)")
-    parser.add_argument("--chroma_filter_threshold", type=float, default=0.6,
-                        help="Relevance filtering threshold for Chroma (0 to 1)")
+    parser.add_argument(
+        "--faiss_filter_threshold", type=float, default=0.75,
+        help="Relevance filtering threshold for FAISS (0 to 1)"
+    )
+    parser.add_argument(
+        "--chroma_filter_threshold", type=float, default=0.6,
+        help="Relevance filtering threshold for Chroma (0 to 1)"
+    )
 
     # Query Settings
-    parser.add_argument("--query", type=str, required=True,
-                        help="User query/question to be answered by the system")
+    parser.add_argument(
+        "--query", type=str, required=True,
+        help="User query/question to be answered by the system"
+    )
 
     # QA Pipeline Settings
-    parser.add_argument("--pipeline_type", type=str, default="RetrievalQAChain",
-                        help="Pipeline type: 'RetrievalQAChain' or 'RetrievalQAWithSourcesChain'")
-    parser.add_argument("--chain_type", type=str, default="stuff",
-                        help="Chain type: 'stuff', 'map_reduce', or 'refine'")
-    parser.add_argument("--verbose", action="store_true",
-                        help="Enable verbose output during processing")
+    parser.add_argument(
+        "--pipeline_type", type=str, default="RetrievalQAChain",
+        help="Pipeline type: 'RetrievalQAChain' or 'RetrievalQAWithSourcesChain'"
+    )
+    parser.add_argument(
+        "--chain_type", type=str, default="stuff",
+        help="Chain type: 'stuff', 'map_reduce', or 'refine'"
+    )
+    parser.add_argument(
+        "--verbose", action="store_true",
+        help="Enable verbose output during processing"
+    )
 
     # Parse and pass arguments to main
     args = parser.parse_args()
