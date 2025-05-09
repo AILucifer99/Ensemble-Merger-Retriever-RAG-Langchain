@@ -7,7 +7,11 @@ This project demonstrates a **robust, context-aware retriever pipeline** using L
 ![Ensemble-ContextualCompression-Retrieval Augmented Generation](https://github.com/AILucifer99/Ensemble-Merger-Retriever-RAG-Langchain/blob/main/architecture/detailed-rag.png)
 
 ---
+## Demo Links
+| Google Colab demo |
+|[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HPqK-iN5616M_A1rCwIpHlgNuVsaX3Kk#scrollTo=AgJk0I8KZMaD)|
 
+---
 ## 🔍 What This Project Covers
 
 - Loading and parsing PDFs
