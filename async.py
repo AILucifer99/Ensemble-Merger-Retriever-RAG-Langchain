@@ -8,7 +8,6 @@ document question answering with a RAG (Retrieval-Augmented Generation) pipeline
 It shows both automated and interactive question answering modes.
 
 Requirements:
-- async_ensemble_retriever.py (containing the AsyncEnsembleMergerRetriever class)
 - Valid API keys in .env file (GOOGLE_API_KEY, GROQ_API_KEY)
 - PDF document for analysis
 """
