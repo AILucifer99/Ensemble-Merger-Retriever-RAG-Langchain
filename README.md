@@ -101,7 +101,27 @@ python inference.py \
   --embedding_provider "Google" \
   --faiss_search_type "similarity" \
 ```
+
 ---
+A table depicting all the necessary parameters to the inference.py for better understanding and intuition.
+---
+| Parameter                   | Type             | Description                                                          | Example                         |
+| --------------------------- | ---------------- | -------------------------------------------------------------------- | ------------------------------- |
+| `--query`                   | `str` (Required) | The natural language question to ask                                 | `"What is ReAct reasoning?"`    |
+| `--model_name`              | `str`            | Language model to use (default: `gemma2-9b-it`)                      | `"llama3-70b-8192"`             |
+| `--data_path`               | `str`            | Path to the input PDF or TXT file                                    | `"./data/ReAct.pdf"`            |
+| `--chunk_size`              | `int`            | Number of characters per document chunk                              | `512`                           |
+| `--chunk_overlap`           | `int`            | Overlap between chunks to preserve context                           | `128`                           |
+| `--embedding_provider`      | `str`            | Choose between `"Google"` or `"OpenAI"`                              | `"OpenAI"`                      |
+| `--faiss_search_type`       | `str`            | FAISS search method: `"similarity"` or `"mmr"`                       | `"mmr"`                         |
+| `--faiss_k`                 | `int`            | Number of top documents FAISS retrieves                              | `3`                             |
+| `--chroma_search_type`      | `str`            | Chroma search method: `"similarity"` or `"mmr"`                      | `"similarity"`                  |
+| `--chroma_k`                | `int`            | Number of top documents Chroma retrieves                             | `4`                             |
+| `--faiss_filter_threshold`  | `float`          | Relevance threshold for FAISS (0-1)                                  | `0.75`                          |
+| `--chroma_filter_threshold` | `float`          | Relevance threshold for Chroma (0-1)                                 | `0.6`                           |
+| `--pipeline_type`           | `str`            | QA Pipeline: `"RetrievalQAChain"` or `"RetrievalQAWithSourcesChain"` | `"RetrievalQAWithSourcesChain"` |
+| `--chain_type`              | `str`            | Chain logic: `"stuff"`, `"map_reduce"`, or `"refine"`                | `"refine"`                      |
+| `--verbose`                 | flag             | Show detailed logs if used                                           | `--verbose`                     |
 
 
 ## 🧠 Key Components
