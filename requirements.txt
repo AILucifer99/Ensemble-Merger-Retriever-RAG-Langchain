@@ -11,3 +11,5 @@ tiktoken
 PyPDF2
 python-dotenv
 argparse
+asyncio
+PyMuPDF
