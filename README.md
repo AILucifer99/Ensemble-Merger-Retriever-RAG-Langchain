@@ -59,7 +59,15 @@ GROQ_API_KEY=your_groq_api_key
 OPENAI_API_KEY=your_openai_api_key
 ```
 
-### 3. Running the code
+### 3. Running the code - 
+
+Running the web application
+---
+
+```bash
+streamlit run app.py
+```
+---
 
 Either it can be executed in code as modular approach - 
 ---
