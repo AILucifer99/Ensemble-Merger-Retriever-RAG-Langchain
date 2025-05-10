@@ -83,6 +83,15 @@ python modularInference.py
 ```
 ---
 
+Executed with asynchronous nature for continous Q&A with cli - 
+---
+
+```bash
+python async.py
+```
+
+---
+
 Using command line with argument parsing for more flexibilty and customizations
 ---
 
