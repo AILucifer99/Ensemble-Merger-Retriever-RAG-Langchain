@@ -8,6 +8,12 @@ This project demonstrates a **robust, context-aware retriever pipeline** using L
 ![Ensemble-ContextualCompression-Retrieval Augmented Generation](https://github.com/AILucifer99/Ensemble-Merger-Retriever-RAG-Langchain/blob/main/architecture/detailed-rag.png)
 
 ---
+
+## Web Application UI/UX 
+![Web Application](https://github.com/AILucifer99/Ensemble-Merger-Retriever-RAG-Langchain/blob/main/architecture/Ensemble-RAG-UI.png)
+
+---
+
 ## Demo Links
 | Google Colab demo |
 |:-:|
