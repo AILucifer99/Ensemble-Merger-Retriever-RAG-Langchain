@@ -106,10 +106,7 @@ Intermediate Example (custom document and model) -
 python inference.py \
   --query "What are the key design principles in ReAct?" \
   --data_path "./papers/ReAct.pdf" \
-  --model_name "llama3-70b-8192" \
-  --chunk_size 512 \
-  --chunk_overlap 128 \
-  --embedding_provider "Google"
+  --model_name "llama3-70b-8192"
 ```
 ---
 
@@ -122,7 +119,7 @@ python inference.py \
   --chunk_size 512 \
   --chunk_overlap 128 \
   --embedding_provider "Google" \
-  --faiss_search_type "similarity" \
+  --faiss_search_type "similarity" 
 ```
 
 ---
