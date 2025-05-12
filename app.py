@@ -5,7 +5,7 @@ import tempfile
 from pathlib import Path
 import time
 import io
-import matplotlib.pyplot as plt
+from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
 import shutil
